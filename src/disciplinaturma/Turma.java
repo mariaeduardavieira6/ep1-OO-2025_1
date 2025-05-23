@@ -82,6 +82,10 @@ public class Turma implements Serializable {
     public boolean removerAluno(String matricula) {
         return alunosMatriculados.remove(matricula);
     }
+    
+    public String getCodigo() {
+        return disciplina.getCodigo();
+    }
 
     @Override
     public String toString() {
