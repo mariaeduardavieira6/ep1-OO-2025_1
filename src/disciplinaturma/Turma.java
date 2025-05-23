@@ -66,6 +66,10 @@ public class Turma implements Serializable {
     public int getCapacidadeMaxima() {
         return capacidadeMaxima;
     }
+    
+    public int getCapacidade() {
+        return capacidadeMaxima;
+    }
 
     public List<String> getAlunosMatriculados() {
         return alunosMatriculados;

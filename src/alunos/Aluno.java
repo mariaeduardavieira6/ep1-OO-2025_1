@@ -9,12 +9,14 @@ public abstract class Aluno {
     private String matricula;
     private String curso;
     private List<String> disciplinasCursando;
+    private List<String> disciplinasConcluidas;
 
     public Aluno(String nome, String matricula, String curso) {
         this.nome = nome;
         this.matricula = matricula;
         this.curso = curso;
         this.disciplinasCursando = new ArrayList<>();
+        this.disciplinasConcluidas = new ArrayList<>();
     }
 
     public String getNome() {
@@ -34,7 +36,19 @@ public abstract class Aluno {
     }
 
     public void adicionarDisciplinaCursando(String codigoDisciplina) {
-        disciplinasCursando.add(codigoDisciplina);
+        if (!disciplinasCursando.contains(codigoDisciplina)) {
+            disciplinasCursando.add(codigoDisciplina);
+        }
+    }
+
+    public List<String> getDisciplinasConcluidas() {
+        return disciplinasConcluidas;
+    }
+
+    public void adicionarDisciplinaConcluida(String codigoDisciplina) {
+        if (!disciplinasConcluidas.contains(codigoDisciplina)) {
+            disciplinasConcluidas.add(codigoDisciplina);
+        }
     }
 
     public void setNome(String nome) {
@@ -59,6 +73,8 @@ public abstract class Aluno {
     }
 
     public abstract boolean podeFazerMaisDisciplinas(int totalDisciplinas);
+
     public abstract boolean recebeNota();
+
     public abstract void mostrarResumo();
 }
