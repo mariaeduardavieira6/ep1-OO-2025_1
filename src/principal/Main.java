@@ -14,12 +14,12 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         CadastroAlunos cadastroAlunos = new CadastroAlunos();
 
-        System.out.println("=== Cadastro de Alunos ===");
+        System.out.println("Cadastro de Alunos ");
         System.out.print("Quantos alunos deseja cadastrar? ");
         int qtdAlunos = Integer.parseInt(sc.nextLine());
 
         for (int i = 0; i < qtdAlunos; i++) {
-            System.out.println("\nAluno #" + (i + 1));
+            System.out.println("\nAluno " + (i + 1));
             System.out.print("Nome: ");
             String nome = sc.nextLine();
 
@@ -46,9 +46,9 @@ public class Main {
             }
         }
 
-        // A partir daqui, segue o código de cadastro de disciplina e turma como você já tinha
+        
 
-        System.out.println("\n=== Cadastro de Disciplina ===");
+        System.out.println("\nCadastro de Disciplina ");
         System.out.print("Nome da disciplina: ");
         String nomeDisc = sc.nextLine();
 
@@ -64,7 +64,7 @@ public class Main {
         int nPre = Integer.parseInt(sc.nextLine());
 
         for (int i = 0; i < nPre; i++) {
-            System.out.print("Código do pré-requisito #" + (i + 1) + ": ");
+            System.out.print("Código do pré-requisito " + (i + 1) + ": ");
             String preReq = sc.nextLine();
             disciplina.adicionarPreRequisito(preReq);
         }
@@ -72,7 +72,7 @@ public class Main {
         System.out.println("\nDisciplina cadastrada:");
         System.out.println(disciplina);
 
-        System.out.println("\n=== Cadastro de Turma ===");
+        System.out.println("\nCadastro de Turma ");
         System.out.print("Nome do professor: ");
         String professor = sc.nextLine();
 
@@ -97,7 +97,7 @@ public class Main {
         System.out.print("Capacidade máxima de alunos: ");
         int capacidade = Integer.parseInt(sc.nextLine());
 
-        Turma turma = new Turma(disciplina, professor, semestre, formaAvaliacao, presencial, sala, horario, capacidade);
+        Turma turma = new Turma(disciplina, professor, semestre, formaAvaliacao, presencial, sala, horario, capacidade, cadastroAlunos);
 
         System.out.println("\nQuantos alunos deseja matricular na turma?");
         int qtdMatriculas = Integer.parseInt(sc.nextLine());
@@ -106,7 +106,6 @@ public class Main {
             System.out.print("Digite a matrícula do aluno #" + (i + 1) + ": ");
             String matricula = sc.nextLine();
 
-            // Verifica se o aluno está cadastrado
             Aluno aluno = cadastroAlunos.buscarAlunoPorMatricula(matricula);
 
             if (aluno != null && turma.adicionarAluno(matricula)) {
