@@ -2,14 +2,53 @@ package principal;
 
 import java.util.Scanner;
 
+import alunos.Aluno;
+import alunos.AlunoEspecial;
+import alunos.AlunoNormal;
+import cadastro.CadastroAlunos;
 import disciplinaturma.Disciplina;
 import disciplinaturma.Turma;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        System.out.println("Cadastro de Disciplina");
+        CadastroAlunos cadastroAlunos = new CadastroAlunos();
+
+        System.out.println("=== Cadastro de Alunos ===");
+        System.out.print("Quantos alunos deseja cadastrar? ");
+        int qtdAlunos = Integer.parseInt(sc.nextLine());
+
+        for (int i = 0; i < qtdAlunos; i++) {
+            System.out.println("\nAluno #" + (i + 1));
+            System.out.print("Nome: ");
+            String nome = sc.nextLine();
+
+            System.out.print("Matrícula: ");
+            String matricula = sc.nextLine();
+
+            System.out.print("Curso: ");
+            String curso = sc.nextLine();
+
+            System.out.print("Tipo (normal/especial): ");
+            String tipo = sc.nextLine().toLowerCase();
+
+            Aluno novoAluno;
+            if (tipo.equals("especial")) {
+                novoAluno = new AlunoEspecial(nome, matricula, curso);
+            } else {
+                novoAluno = new AlunoNormal(nome, matricula, curso);
+            }
+
+            if (cadastroAlunos.cadastrarAluno(novoAluno)) {
+                System.out.println("Aluno cadastrado com sucesso.");
+            } else {
+                System.out.println("Matrícula já existente. Aluno não cadastrado.");
+            }
+        }
+
+        // A partir daqui, segue o código de cadastro de disciplina e turma como você já tinha
+
+        System.out.println("\n=== Cadastro de Disciplina ===");
         System.out.print("Nome da disciplina: ");
         String nomeDisc = sc.nextLine();
 
@@ -60,17 +99,20 @@ public class Main {
 
         Turma turma = new Turma(disciplina, professor, semestre, formaAvaliacao, presencial, sala, horario, capacidade);
 
-        
-        System.out.println("\nQuantos alunos deseja matricular?");
-        int qtdAlunos = Integer.parseInt(sc.nextLine());
+        System.out.println("\nQuantos alunos deseja matricular na turma?");
+        int qtdMatriculas = Integer.parseInt(sc.nextLine());
 
-        for (int i = 0; i < qtdAlunos; i++) {
+        for (int i = 0; i < qtdMatriculas; i++) {
             System.out.print("Digite a matrícula do aluno #" + (i + 1) + ": ");
             String matricula = sc.nextLine();
-            if (turma.adicionarAluno(matricula)) {
+
+            // Verifica se o aluno está cadastrado
+            Aluno aluno = cadastroAlunos.buscarAlunoPorMatricula(matricula);
+
+            if (aluno != null && turma.adicionarAluno(matricula)) {
                 System.out.println("Aluno matriculado com sucesso.");
             } else {
-                System.out.println("Não foi possível matricular o aluno (vaga cheia ou matrícula repetida).");
+                System.out.println("Não foi possível matricular o aluno (vaga cheia, matrícula repetida ou aluno não cadastrado).");
             }
         }
 
