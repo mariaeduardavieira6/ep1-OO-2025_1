@@ -50,6 +50,11 @@ public abstract class Aluno {
             disciplinasConcluidas.add(codigoDisciplina);
         }
     }
+    
+    public boolean jaCursou(String codigoDisciplina) {
+        return disciplinasConcluidas.contains(codigoDisciplina);
+    }
+
 
     public void setNome(String nome) {
         this.nome = nome;
