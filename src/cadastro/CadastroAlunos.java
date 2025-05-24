@@ -52,6 +52,17 @@ public class CadastroAlunos {
             return true;
         }
         return false;
+    
     }
-}
+        public boolean registrarConclusaoDisciplina(String matricula, String codigoDisciplina) {
+            Aluno aluno = buscarAlunoPorMatricula(matricula);
+            if (aluno == null) {
+                System.out.println("Aluno não encontrado.");
+                return false;
+            }
 
+            aluno.adicionarDisciplinaConcluida(codigoDisciplina);
+            System.out.println("Disciplina " + codigoDisciplina + " registrada como concluída para o aluno " + aluno.getNome());
+            return true;
+        }
+    }
