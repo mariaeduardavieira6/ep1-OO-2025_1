@@ -7,6 +7,8 @@ import java.util.Scanner;
 import alunos.Aluno;
 import alunos.AlunoEspecial;
 import alunos.AlunoNormal;
+import avaliacao.Avaliacao;
+import avaliacao.ControleAvaliacaoFrequencia;
 import cadastro.CadastroAlunos;
 import disciplinaturma.Disciplina;
 import disciplinaturma.Turma;
@@ -15,6 +17,7 @@ public class Main {
 
     private static List<Disciplina> listaDisciplinas = new ArrayList<>();
     private static List<Turma> listaTurmas = new ArrayList<>();
+    private static ControleAvaliacaoFrequencia controleAvaliacao = new ControleAvaliacaoFrequencia();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -258,7 +261,71 @@ public class Main {
     }
 
     private static void menuAvaliacaoFrequencia(Scanner sc) {
-        System.out.println("Menu de Avaliação e Frequência ainda não implementado.");
-       
+    	boolean voltarMenu = false;
+
+        while (!voltarMenu) {
+            System.out.println("\nMenu de Avaliação e Frequência ");
+            System.out.println("1. Registrar avaliação e frequência");
+            System.out.println("2. Consultar situação do aluno");
+            System.out.println("3. Voltar");
+            System.out.print("Escolha uma opção: ");
+            int opcao = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Matrícula do aluno: ");
+                    String matricula = sc.nextLine();
+
+                    System.out.print("Código da turma: ");
+                    String turma = sc.nextLine();
+
+                    System.out.print("Forma de avaliação (1 - simples | 2 - ponderada): ");
+                    int forma = sc.nextInt();
+
+                    Avaliacao avaliacao = new Avaliacao(forma);
+
+                    System.out.print("Nota P1: ");
+                    double p1 = sc.nextDouble();
+                    System.out.print("Nota P2: ");
+                    double p2 = sc.nextDouble();
+                    System.out.print("Nota P3: ");
+                    double p3 = sc.nextDouble();
+                    System.out.print("Nota dos trabalhos (L): ");
+                    double l = sc.nextDouble();
+                    System.out.print("Nota dos seminários (S): ");
+                    double s = sc.nextDouble();
+
+                    avaliacao.setNotas(p1, p2, p3, l, s);
+
+                    System.out.print("Frequência (%): ");
+                    double freq = sc.nextDouble();
+                    sc.nextLine(); 
+                    avaliacao.setFrequencia(freq);
+
+                    controleAvaliacao.registrarAvaliacao(matricula, turma, avaliacao);
+                    System.out.println("Avaliação registrada com sucesso!");
+                    break;
+
+                case 2:
+                    System.out.print("Matrícula do aluno: ");
+                    String matConsulta = sc.nextLine();
+
+                    System.out.print("Código da turma: ");
+                    String turmaConsulta = sc.nextLine();
+
+                    String situacao = controleAvaliacao.getSituacaoAluno(matConsulta, turmaConsulta);
+                    System.out.println("Situação: " + situacao);
+                    break;
+
+                case 3:
+                    voltarMenu = true;
+                    System.out.println("Voltando ao menu principal...");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
     }
 }
