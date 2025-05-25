@@ -1,8 +1,9 @@
 package principal;
 
-import cadastro.CadastroAlunos;
-import alunos.AlunoNormal;
 import alunos.AlunoEspecial;
+import alunos.AlunoNormal;
+import avaliacao.Avaliacao;
+import cadastro.CadastroAlunos;
 
 public class MainTeste {
     public static void main(String[] args) {
@@ -16,9 +17,23 @@ public class MainTeste {
 
         cadastro.registrarConclusaoDisciplina("232014511", "MAT001");
 
-        cadastro.registrarConclusaoDisciplina("232090909", "MAT001");
+        boolean resultado = cadastro.registrarConclusaoDisciplina("232090909", "MAT001");
+        if (!resultado) {
+            System.out.println("Aluno com matrícula 232090909 não encontrado, não foi possível registrar a disciplina.");
+        }
 
         if (aluno1.jaCursou("MAT001")) {
+            System.out.println(aluno1.getNome() + " já cursou a disciplina MAT001.");
+        } else {
+            System.out.println(aluno1.getNome() + " não cursou a disciplina MAT001.");
         }
+
+        
+        Avaliacao avaliacao = new Avaliacao(1);
+        avaliacao.setNotas(6.0, 7.5, 5.0, 8.0, 7.0);
+        avaliacao.setFrequencia(80.0);
+
+        System.out.println("Média final: " + avaliacao.calcularMedia());
+        System.out.println("Situação: " + avaliacao.getSituacao());
     }
 }
