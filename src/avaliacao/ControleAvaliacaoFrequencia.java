@@ -34,4 +34,26 @@ public class ControleAvaliacaoFrequencia {
         }
         return avaliacao.getSituacao();
     }
+    
+    
+    public void imprimirRelatorioPorTurma(String codigoTurma, Map<String, String> alunosMatriculados) {
+        System.out.println("Relatório da Turma: " + codigoTurma + " ");
+        System.out.println("Aluno\t\tMédia\tFrequência\tSituação");
+        for (Map.Entry<String, String> entry : alunosMatriculados.entrySet()) {
+            String matricula = entry.getKey();
+            String nomeAluno = entry.getValue();
+            Avaliacao avaliacao = getAvaliacao(matricula, codigoTurma);
+            if (avaliacao != null) {
+                System.out.printf("%s (%s)\t%.2f\t%.2f%%\t\t%s\n", 
+                    nomeAluno, matricula, 
+                    avaliacao.calcularMedia(), 
+                    avaliacao.getFrequencia(), 
+                    avaliacao.getSituacao());
+            } else {
+                System.out.printf("%s (%s)\tSem avaliação registrada.\n", nomeAluno, matricula);
+            }
+        }
+        System.out.println();
+    }
 }
+

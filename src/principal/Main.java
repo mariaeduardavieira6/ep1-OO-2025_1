@@ -10,6 +10,7 @@ import alunos.AlunoNormal;
 import avaliacao.Avaliacao;
 import avaliacao.ControleAvaliacaoFrequencia;
 import cadastro.CadastroAlunos;
+import cadastro.CadastroTurmas;
 import disciplinaturma.Disciplina;
 import disciplinaturma.Turma;
 
@@ -22,9 +23,9 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         CadastroAlunos cadastroAlunos = new CadastroAlunos();
-
+        CadastroTurmas cadastroTurmas = new CadastroTurmas();
         menuPrincipal(sc, cadastroAlunos);
-
+        menuRelatorios(cadastroTurmas, sc);
         sc.close();
     }
 
@@ -35,29 +36,91 @@ public class Main {
             System.out.println("1. Menu Alunos");
             System.out.println("2. Menu Disciplina/Turma");
             System.out.println("3. Menu Avaliação/Frequência");
-            System.out.println("4. Sair");
+            System.out.println("4. Gerar Relatório Geral");
+            System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
             opcao = Integer.parseInt(sc.nextLine());
 
             switch (opcao) {
+            case 1:
+                menuAlunos(sc, cadastroAlunos);
+                break;
+            case 2:
+                menuDisciplinaTurma(sc, cadastroAlunos);
+                break;
+            case 3:
+                menuAvaliacaoFrequencia(sc);
+                break;
+            case 4:
+                System.out.println("Relatório geral não implementado ainda.");
+                break;
+            case 5:
+                System.out.println("Encerrando o programa...");
+                break;
+            default:
+                System.out.println("Opção inválida. Tente novamente.");
+        }
+    } while (opcao != 5);
+}
+    
+    private static void menuRelatorios(CadastroTurmas cadastroTurmas, Scanner sc) {
+        boolean relatoriosAtivos = true;
+
+        while (relatoriosAtivos) {
+            System.out.println("\nMenu Relatórios:");
+            System.out.println("1 - Relatório por Turma");
+            System.out.println("2 - Relatório por Disciplina");
+            System.out.println("3 - Relatório por Professor");
+            System.out.println("0 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            int opcaoRel = sc.nextInt();
+            sc.nextLine(); 
+
+            switch (opcaoRel) {
                 case 1:
-                    menuAlunos(sc, cadastroAlunos);
+                    System.out.print("Digite o código da turma: ");
+                    String codigoTurma = sc.nextLine();
+                    Turma turma = cadastroTurmas.buscarTurma(codigoTurma);
+                    if (turma != null) {
+                        System.out.println(turma);
+                    } else {
+                        System.out.println("Turma não encontrada.");
+                    }
                     break;
                 case 2:
-                    menuDisciplinaTurma(sc, cadastroAlunos);
+                    System.out.print("Digite o código da disciplina: ");
+                    String codigoDisc = sc.nextLine();
+                    var turmasDisc = cadastroTurmas.listarTurmasPorDisciplina(codigoDisc);
+                    if (!turmasDisc.isEmpty()) {
+                        for (Turma t : turmasDisc) {
+                            System.out.println(t);
+                        }
+                    } else {
+                        System.out.println("Nenhuma turma encontrada para essa disciplina.");
+                    }
                     break;
                 case 3:
-                    menuAvaliacaoFrequencia(sc);
+                    System.out.print("Digite o nome do professor: ");
+                    String nomeProf = sc.nextLine();
+                    var turmasProf = cadastroTurmas.listarTurmas().stream()
+                        .filter(t -> t.getProfessor().equalsIgnoreCase(nomeProf))
+                        .toList();
+                    if (!turmasProf.isEmpty()) {
+                        for (Turma t : turmasProf) {
+                            System.out.println(t);
+                        }
+                    } else {
+                        System.out.println("Nenhuma turma encontrada para esse professor.");
+                    }
                     break;
-                case 4:
-                    System.out.println("Encerrando o programa...");
+                case 0:
+                    relatoriosAtivos = false;
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println("Opção inválida!");
             }
-        } while (opcao != 4);
+        }
     }
-
     private static void menuAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
         int opcao;
         do {
@@ -329,4 +392,4 @@ public class Main {
             }
         }
     }
-}
+}   

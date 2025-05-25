@@ -46,4 +46,67 @@ public class CadastroTurmas {
         }
         return turmasPorDisciplina;
     }
+    
+    
+    
+    public void gerarRelatorioPorTurmas() {
+        if (listaTurmas.isEmpty()) {
+            System.out.println("Nenhuma turma cadastrada.");
+            return;
+        }
+
+        System.out.println("RELATÓRIO POR TURMAS ");
+        for (Turma turma : listaTurmas) {
+            System.out.println(turma);
+        }
+    }
+
+    public void gerarRelatorioPorDisciplina(String codigoDisciplina) {
+        boolean encontrou = false;
+        System.out.println("RELATÓRIO POR DISCIPLINA: " + codigoDisciplina + " ");
+
+        for (Turma turma : listaTurmas) {
+            if (turma.getDisciplina().getCodigo().equalsIgnoreCase(codigoDisciplina)) {
+                System.out.println(turma);
+                encontrou = true;
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhuma turma encontrada para essa disciplina.");
+        }
+    }
+
+    public void gerarRelatorioPorProfessor(String nomeProfessor) {
+        boolean encontrou = false;
+        System.out.println("RELATÓRIO POR PROFESSOR: " + nomeProfessor + " ");
+
+        for (Turma turma : listaTurmas) {
+            if (turma.getProfessor().equalsIgnoreCase(nomeProfessor)) {
+                System.out.println(turma);
+                encontrou = true;
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhuma turma encontrada para esse professor.");
+        }
+    }
 }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
