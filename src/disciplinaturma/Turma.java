@@ -95,6 +95,11 @@ public class Turma implements Serializable {
 			System.out.println("Aluno com matrícula " + matricula + " não encontrado.");
 			return false;
 		}
+		
+		if (aluno.isSemestreTrancado()) {
+	        System.out.println("Aluno " + aluno.getNome() + " está com o semestre trancado e não pode se matricular.");
+	        return false;
+		}
 
 		for (String preReq : disciplina.getPreRequisitos()) {
 			if (!aluno.jaCursou(preReq)) {
@@ -114,7 +119,8 @@ public class Turma implements Serializable {
 		System.out.println(
 				"Aluno " + aluno.getNome() + " matriculado com sucesso na disciplina " + disciplina.getCodigo());
 		return true;
-	}
+}
+		
 
 	public boolean removerAluno(String matricula) {
 		return alunosMatriculados.remove(matricula);

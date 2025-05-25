@@ -10,6 +10,8 @@ public abstract class Aluno {
     private String curso;
     private List<String> disciplinasCursando;
     private List<String> disciplinasConcluidas;
+    private boolean semestreTrancado = false;
+
 
     public Aluno(String nome, String matricula, String curso) {
         this.nome = nome;
@@ -64,6 +66,15 @@ public abstract class Aluno {
         this.curso = curso;
     }
 
+    public boolean isSemestreTrancado() {
+        return semestreTrancado;
+    }
+
+    public void setSemestreTrancado(boolean semestreTrancado) {
+        this.semestreTrancado = semestreTrancado;
+    }
+
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
