@@ -14,15 +14,52 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         CadastroAlunos cadastroAlunos = new CadastroAlunos();
-        cadastrarAlunos(sc, cadastroAlunos);
+        menuAlunos(sc, cadastroAlunos);
         Disciplina disciplina = cadastrarDisciplina(sc);
         cadastrarTurma(sc, disciplina, cadastroAlunos);
         sc.close();
-        
-        
-    }    
-        private static void cadastrarAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
-        
+          
+ }  
+
+    private static void menuAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
+        int opcao;
+        do {
+            System.out.println("\nMenu Alunos ");
+            System.out.println("1. Cadastrar aluno");
+            System.out.println("2. Listar alunos");
+            System.out.println("3. Sair do menu de alunos");
+            System.out.print("Escolha uma opção: ");
+            opcao = Integer.parseInt(sc.nextLine());
+
+            switch (opcao) {
+                case 1:
+                    cadastrarAlunos(sc, cadastroAlunos);
+                    break;
+                case 2:
+                    listarAlunos(cadastroAlunos);
+                    break;
+                case 3:
+                    System.out.println("Saindo do menu de alunos...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+
+        } while (opcao != 3);
+    }
+    
+    private static void listarAlunos(CadastroAlunos cadastroAlunos) {
+        System.out.println("\nLista de Alunos:");
+        if (cadastroAlunos.listarAlunos().isEmpty()) {
+            System.out.println("Nenhum aluno cadastrado.");
+            return;
+        }
+        for (Aluno aluno : cadastroAlunos.listarAlunos()) {
+            aluno.mostrarResumo();
+        }
+    }
+    
+     private static void cadastrarAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
         System.out.println("Cadastro de Alunos ");
         System.out.print("Quantos alunos deseja cadastrar? ");
         int qtdAlunos = Integer.parseInt(sc.nextLine());
