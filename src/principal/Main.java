@@ -165,9 +165,10 @@ public class Main {
 
         System.out.print("Semestre (ex: 2025.1): ");
         String semestre = sc.nextLine();
+ 
+        System.out.print("Forma de avaliação (1 para média simples, 2 para média ponderada): ");
+        int formaAvaliacao = Integer.parseInt(sc.nextLine());
 
-        System.out.print("Forma de avaliação: ");
-        String formaAvaliacao = sc.nextLine();
 
         System.out.print("A turma é presencial? (true/false): ");
         boolean presencial = Boolean.parseBoolean(sc.nextLine());

@@ -13,7 +13,7 @@ public class Turma implements Serializable {
 	private Disciplina disciplina;
 	private String professor;
 	private String semestre;
-	private String formaAvaliacao;
+	private int formaAvaliacao;
 	private boolean presencial;
 	private String sala;
 	private String horario;
@@ -22,7 +22,7 @@ public class Turma implements Serializable {
 	private CadastroAlunos cadastroAlunos;
 	
 
-	public Turma(Disciplina disciplina, String professor, String semestre, String formaAvaliacao, boolean presencial,
+	public Turma(Disciplina disciplina, String professor, String semestre, int formaAvaliacao, boolean presencial,
 			String sala, String horario, int capacidadeMaxima, CadastroAlunos cadastroAlunos) {
 		this.disciplina = disciplina;
 		this.professor = professor;
@@ -48,9 +48,13 @@ public class Turma implements Serializable {
 		return semestre;
 	}
 
-	public String getFormaAvaliacao() {
+	public int getFormaAvaliacao() {
 		return formaAvaliacao;
 	}
+	
+	 public void setFormaAvaliacao(int formaAvaliacao) {
+	        this.formaAvaliacao = formaAvaliacao;
+	    }
 
 	public boolean isPresencial() {
 		return presencial;
@@ -125,15 +129,27 @@ public class Turma implements Serializable {
 }
 		
 
-	public boolean removerAluno(String matricula) {
-		return alunosMatriculados.remove(matricula);
-	}
+    private String getFormaAvaliacaoTexto() {
+        switch (formaAvaliacao) {
+            case 1:
+                return "Prova";
+            case 2:
+                return "Trabalho";
+            case 3:
+                return "Prova e Trabalho";
+            default:
+                return "Desconhecida";
+        }
+    }
 
-	@Override
-	public String toString() {
-		return "Turma da disciplina " + disciplina.getNome() + " (" + disciplina.getCodigo() + ") - " + "Professor: "
-				+ professor + " | Semestre: " + semestre + "\nForma de Avaliação: " + formaAvaliacao + " | Modalidade: "
-				+ (presencial ? "Presencial" : "Remota") + " | Sala: " + sala + " | Horário: " + horario
-				+ "\nCapacidade: " + capacidadeMaxima + " alunos | Matriculados: " + alunosMatriculados.size();
-	}
+    @Override
+    public String toString() {
+        return "Turma da disciplina " + disciplina.getNome() + " (" + disciplina.getCodigo() + ") - " +
+                "Professor: " + professor + " | Semestre: " + semestre + "\n" +
+                "Forma de Avaliação: " + getFormaAvaliacaoTexto() + " | Modalidade: " +
+                (presencial ? "Presencial" : "Remota") + " | Sala: " + sala + " | Horário: " + horario + "\n" +
+                "Capacidade: " + capacidadeMaxima + " alunos | Matriculados: " + alunosMatriculados.size();
+    }
 }
+	
+	
