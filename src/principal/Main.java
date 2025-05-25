@@ -13,7 +13,12 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         CadastroAlunos cadastroAlunos = new CadastroAlunos();
-
+        
+        cadastrarAlunos(sc, cadastroAlunos);
+        
+    }    
+        private static void cadastrarAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
+        
         System.out.println("Cadastro de Alunos ");
         System.out.print("Quantos alunos deseja cadastrar? ");
         int qtdAlunos = Integer.parseInt(sc.nextLine());
@@ -72,6 +77,8 @@ public class Main {
         System.out.println("\nDisciplina cadastrada:");
         System.out.println(disciplina);
 
+        
+        
         System.out.println("\nCadastro de Turma ");
         System.out.print("Nome do professor: ");
         String professor = sc.nextLine();
