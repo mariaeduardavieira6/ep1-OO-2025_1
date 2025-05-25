@@ -11,10 +11,14 @@ import disciplinaturma.Turma;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         CadastroAlunos cadastroAlunos = new CadastroAlunos();
-        
         cadastrarAlunos(sc, cadastroAlunos);
+        Disciplina disciplina = cadastrarDisciplina(sc);
+        cadastrarTurma(sc, disciplina, cadastroAlunos);
+        sc.close();
+        
         
     }    
         private static void cadastrarAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
@@ -50,9 +54,9 @@ public class Main {
                 System.out.println("Matrícula já existente. Aluno não cadastrado.");
             }
         }
-
+    }       
         
-
+        private static Disciplina cadastrarDisciplina(Scanner sc) {
         System.out.println("\nCadastro de Disciplina ");
         System.out.print("Nome da disciplina: ");
         String nomeDisc = sc.nextLine();
@@ -77,8 +81,11 @@ public class Main {
         System.out.println("\nDisciplina cadastrada:");
         System.out.println(disciplina);
 
+        return disciplina;
+        }
+          
         
-        
+    private static void cadastrarTurma(Scanner sc, Disciplina disciplina, CadastroAlunos cadastroAlunos) {
         System.out.println("\nCadastro de Turma ");
         System.out.print("Nome do professor: ");
         String professor = sc.nextLine();
@@ -125,6 +132,6 @@ public class Main {
         System.out.println("\nTurma cadastrada:");
         System.out.println(turma);
 
-        sc.close();
     }
-}
+  }
+
