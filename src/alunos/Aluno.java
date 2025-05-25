@@ -10,7 +10,9 @@ public abstract class Aluno {
     private String curso;
     private List<String> disciplinasCursando;
     private List<String> disciplinasConcluidas;
+    private List<String> disciplinasTrancadas;
     private boolean semestreTrancado = false;
+    
 
 
     public Aluno(String nome, String matricula, String curso) {
@@ -19,6 +21,7 @@ public abstract class Aluno {
         this.curso = curso;
         this.disciplinasCursando = new ArrayList<>();
         this.disciplinasConcluidas = new ArrayList<>();
+        this.disciplinasTrancadas = new ArrayList<>();
     }
 
     public String getNome() {
@@ -57,13 +60,23 @@ public abstract class Aluno {
         return disciplinasConcluidas.contains(codigoDisciplina);
     }
 
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    
+    public List<String> getDisciplinasTrancadas() {
+        return disciplinasTrancadas;
     }
 
-    public void setCurso(String curso) {
-        this.curso = curso;
+    public void trancarDisciplina(String codigoDisciplina) {
+        if (!disciplinasTrancadas.contains(codigoDisciplina)) {
+            disciplinasTrancadas.add(codigoDisciplina);
+        }
+    }
+
+    public void destrancarDisciplina(String codigoDisciplina) {
+        disciplinasTrancadas.remove(codigoDisciplina);
+    }
+
+    public boolean isDisciplinaTrancada(String codigoDisciplina) {
+        return disciplinasTrancadas.contains(codigoDisciplina);
     }
 
     public boolean isSemestreTrancado() {
@@ -74,6 +87,23 @@ public abstract class Aluno {
         this.semestreTrancado = semestreTrancado;
     }
 
+    public void trancarSemestre() {
+        this.semestreTrancado = true;
+    }
+
+    public void destrancarSemestre() {
+        this.semestreTrancado = false;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+   
     
     @Override
     public boolean equals(Object obj) {

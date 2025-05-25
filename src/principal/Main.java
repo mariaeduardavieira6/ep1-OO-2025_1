@@ -1,5 +1,7 @@
 package principal;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import alunos.Aluno;
@@ -10,16 +12,48 @@ import disciplinaturma.Disciplina;
 import disciplinaturma.Turma;
 
 public class Main {
-    public static void main(String[] args) {
 
+    private static List<Disciplina> listaDisciplinas = new ArrayList<>();
+    private static List<Turma> listaTurmas = new ArrayList<>();
+
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         CadastroAlunos cadastroAlunos = new CadastroAlunos();
-        menuAlunos(sc, cadastroAlunos);
-        Disciplina disciplina = cadastrarDisciplina(sc);
-        cadastrarTurma(sc, disciplina, cadastroAlunos);
+
+        menuPrincipal(sc, cadastroAlunos);
+
         sc.close();
-          
- }  
+    }
+
+    private static void menuPrincipal(Scanner sc, CadastroAlunos cadastroAlunos) {
+        int opcao;
+        do {
+            System.out.println("\nMENU PRINCIPAL ");
+            System.out.println("1. Menu Alunos");
+            System.out.println("2. Menu Disciplina/Turma");
+            System.out.println("3. Menu Avaliação/Frequência");
+            System.out.println("4. Sair");
+            System.out.print("Escolha uma opção: ");
+            opcao = Integer.parseInt(sc.nextLine());
+
+            switch (opcao) {
+                case 1:
+                    menuAlunos(sc, cadastroAlunos);
+                    break;
+                case 2:
+                    menuDisciplinaTurma(sc, cadastroAlunos);
+                    break;
+                case 3:
+                    menuAvaliacaoFrequencia(sc);
+                    break;
+                case 4:
+                    System.out.println("Encerrando o programa...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 4);
+    }
 
     private static void menuAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
         int opcao;
@@ -47,7 +81,7 @@ public class Main {
 
         } while (opcao != 3);
     }
-    
+
     private static void listarAlunos(CadastroAlunos cadastroAlunos) {
         System.out.println("\nLista de Alunos:");
         if (cadastroAlunos.listarAlunos().isEmpty()) {
@@ -58,8 +92,8 @@ public class Main {
             aluno.mostrarResumo();
         }
     }
-    
-     private static void cadastrarAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
+
+    private static void cadastrarAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
         System.out.println("Cadastro de Alunos ");
         System.out.print("Quantos alunos deseja cadastrar? ");
         int qtdAlunos = Integer.parseInt(sc.nextLine());
@@ -91,9 +125,9 @@ public class Main {
                 System.out.println("Matrícula já existente. Aluno não cadastrado.");
             }
         }
-    }       
-        
-        private static Disciplina cadastrarDisciplina(Scanner sc) {
+    }
+
+    private static Disciplina cadastrarDisciplina(Scanner sc) {
         System.out.println("\nCadastro de Disciplina ");
         System.out.print("Nome da disciplina: ");
         String nomeDisc = sc.nextLine();
@@ -119,9 +153,8 @@ public class Main {
         System.out.println(disciplina);
 
         return disciplina;
-        }
-          
-        
+    }
+
     private static void cadastrarTurma(Scanner sc, Disciplina disciplina, CadastroAlunos cadastroAlunos) {
         System.out.println("\nCadastro de Turma ");
         System.out.print("Nome do professor: ");
@@ -166,9 +199,66 @@ public class Main {
             }
         }
 
+        listaTurmas.add(turma);
+
         System.out.println("\nTurma cadastrada:");
         System.out.println(turma);
-
     }
-  }
 
+    private static void menuDisciplinaTurma(Scanner sc, CadastroAlunos cadastroAlunos) {
+        int opcao;
+        do {
+            System.out.println("\nMenu Disciplina/Turma");
+            System.out.println("1. Cadastrar Disciplina");
+            System.out.println("2. Cadastrar Turma");
+            System.out.println("3. Listar Turmas");
+            System.out.println("4. Voltar");
+            System.out.print("Escolha uma opção: ");
+            opcao = Integer.parseInt(sc.nextLine());
+
+            switch (opcao) {
+                case 1:
+                    Disciplina novaDisciplina = cadastrarDisciplina(sc);
+                    listaDisciplinas.add(novaDisciplina);
+                    break;
+                case 2:
+                    if (listaDisciplinas.isEmpty()) {
+                        System.out.println("Nenhuma disciplina cadastrada. Cadastre uma disciplina primeiro.");
+                    } else {
+                        System.out.println("\nDisciplinas disponíveis:");
+                        for (int i = 0; i < listaDisciplinas.size(); i++) {
+                            System.out.println((i + 1) + ". " + listaDisciplinas.get(i).getNome());
+                        }
+                        System.out.print("Escolha o número da disciplina: ");
+                        int indice = Integer.parseInt(sc.nextLine()) - 1;
+                        if (indice >= 0 && indice < listaDisciplinas.size()) {
+                            cadastrarTurma(sc, listaDisciplinas.get(indice), cadastroAlunos);
+                        } else {
+                            System.out.println("Índice inválido.");
+                        }
+                    }
+                    break;
+                case 3:
+                    System.out.println("\nTurmas cadastradas:");
+                    if (listaTurmas.isEmpty()) {
+                        System.out.println("Nenhuma turma cadastrada.");
+                    } else {
+                        for (Turma turma : listaTurmas) {
+                            System.out.println(turma);
+                        }
+                    }
+                    break;
+                case 4:
+                    System.out.println("Voltando ao menu principal...");
+                    break;
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        } while (opcao != 4);
+    }
+
+    private static void menuAvaliacaoFrequencia(Scanner sc) {
+        System.out.println("Menu de Avaliação e Frequência ainda não implementado.");
+       
+    }
+}

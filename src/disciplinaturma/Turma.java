@@ -20,6 +20,7 @@ public class Turma implements Serializable {
 	private int capacidadeMaxima;
 	private List<String> alunosMatriculados;
 	private CadastroAlunos cadastroAlunos;
+	
 
 	public Turma(Disciplina disciplina, String professor, String semestre, String formaAvaliacao, boolean presencial,
 			String sala, String horario, int capacidadeMaxima, CadastroAlunos cadastroAlunos) {
@@ -97,9 +98,11 @@ public class Turma implements Serializable {
 		}
 		
 		if (aluno.isSemestreTrancado()) {
-	        System.out.println("Aluno " + aluno.getNome() + " está com o semestre trancado e não pode se matricular.");
-	        return false;
-		}
+            System.out.println("Aluno está com o semestre trancado e não pode se matricular.");
+            return false;
+        }
+
+		
 
 		for (String preReq : disciplina.getPreRequisitos()) {
 			if (!aluno.jaCursou(preReq)) {
