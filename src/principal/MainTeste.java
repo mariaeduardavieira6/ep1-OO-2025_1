@@ -3,6 +3,7 @@ package principal;
 import alunos.AlunoEspecial;
 import alunos.AlunoNormal;
 import avaliacao.Avaliacao;
+import avaliacao.ControleAvaliacaoFrequencia;
 import cadastro.CadastroAlunos;
 
 public class MainTeste {
@@ -35,5 +36,18 @@ public class MainTeste {
 
         System.out.println("Média final: " + avaliacao.calcularMedia());
         System.out.println("Situação: " + avaliacao.getSituacao());
-    }
+        
+        ControleAvaliacaoFrequencia controle = new ControleAvaliacaoFrequencia();
+        
+        Avaliacao avaliacao1 = new Avaliacao(1);
+        avaliacao1.setNotas(6.0, 7.5, 5.0, 8.0, 7.0);
+        avaliacao1.setFrequencia(80.0);
+        
+        controle.registrarAvaliacao("232014511", "MAT001", avaliacao1);
+
+        System.out.println("Média final: " + controle.getAvaliacao("232014511", "MAT001").calcularMedia());
+        System.out.println("Situação: " + controle.getSituacaoAluno("232014511", "MAT001"));
+        
+     }
+
 }
