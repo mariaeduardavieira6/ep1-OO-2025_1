@@ -21,7 +21,9 @@ public class Turma implements Serializable {
 	private List<String> alunosMatriculados;
 	private CadastroAlunos cadastroAlunos;
 	
-
+	public Aluno buscarAlunoPorMatricula(String matricula) {
+	    return cadastroAlunos.buscarAlunoPorMatricula(matricula);
+	}
 	public Turma(Disciplina disciplina, String professor, String semestre, int formaAvaliacao, boolean presencial,
 			String sala, String horario, int capacidadeMaxima, CadastroAlunos cadastroAlunos) {
 		this.disciplina = disciplina;
@@ -39,6 +41,11 @@ public class Turma implements Serializable {
 	public Disciplina getDisciplina() {
 		return disciplina;
 	}
+	
+	public CadastroAlunos getCadastroAlunos() {
+	    return cadastroAlunos;
+	}
+
 
 	public String getProfessor() {
 		return professor;

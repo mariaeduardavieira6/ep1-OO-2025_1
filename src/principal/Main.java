@@ -15,7 +15,6 @@ import disciplinaturma.Disciplina;
 import disciplinaturma.Turma;
 
 public class Main {
-
     private static List<Disciplina> listaDisciplinas = new ArrayList<>();
     private static List<Turma> listaTurmas = new ArrayList<>();
     private static ControleAvaliacaoFrequencia controleAvaliacao = new ControleAvaliacaoFrequencia();
@@ -24,12 +23,13 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         CadastroAlunos cadastroAlunos = new CadastroAlunos();
         CadastroTurmas cadastroTurmas = new CadastroTurmas();
-        menuPrincipal(sc, cadastroAlunos);
+        menuPrincipal(sc, cadastroAlunos, cadastroTurmas);
+        menuRelatorios(cadastroTurmas, sc);
         menuRelatorios(cadastroTurmas, sc);
         sc.close();
     }
 
-    private static void menuPrincipal(Scanner sc, CadastroAlunos cadastroAlunos) {
+    private static void menuPrincipal(Scanner sc, CadastroAlunos cadastroAlunos, CadastroTurmas cadastroTurmas) {
         int opcao;
         do {
             System.out.println("\nMENU PRINCIPAL ");
@@ -52,7 +52,7 @@ public class Main {
                 menuAvaliacaoFrequencia(sc);
                 break;
             case 4:
-                System.out.println("Relatório geral não implementado ainda.");
+                menuRelatorios(cadastroTurmas, sc);
                 break;
             case 5:
                 System.out.println("Encerrando o programa...");
@@ -78,27 +78,46 @@ public class Main {
 
             switch (opcaoRel) {
                 case 1:
-                    System.out.print("Digite o código da turma: ");
+                    System.out.print("Digite o código da turma (código da disciplina): ");
                     String codigoTurma = sc.nextLine();
                     Turma turma = cadastroTurmas.buscarTurma(codigoTurma);
                     if (turma != null) {
-                        System.out.println(turma);
+                        System.out.println("Código da Turma: " + turma.getCodigo());
+                        System.out.println("Disciplina: " + turma.getDisciplina().getNome());
+                        System.out.println("Professor: " + turma.getProfessor());
+                        System.out.println("Semestre: " + turma.getSemestre());
+                        System.out.println("Alunos matriculados:");
+                        if (turma.getAlunosMatriculados().isEmpty()) {
+                            System.out.println("Nenhum aluno matriculado.");
+                        } else {
+                            for (String matricula : turma.getAlunosMatriculados()) {
+                            	Aluno aluno = turma.getCadastroAlunos().buscarAlunoPorMatricula(matricula);
+
+                                if (aluno != null) {
+                                    System.out.println("- " + aluno.getNome() + " (Matrícula: " + matricula + ")");
+                                } else {
+                                    System.out.println("- Matrícula não encontrada: " + matricula);
+                                }
+                            }
+                        }
                     } else {
                         System.out.println("Turma não encontrada.");
                     }
                     break;
+
                 case 2:
                     System.out.print("Digite o código da disciplina: ");
                     String codigoDisc = sc.nextLine();
                     var turmasDisc = cadastroTurmas.listarTurmasPorDisciplina(codigoDisc);
                     if (!turmasDisc.isEmpty()) {
                         for (Turma t : turmasDisc) {
-                            System.out.println(t);
+                            System.out.println("Turma: " + t.getCodigo() + " | Professor: " + t.getProfessor());
                         }
                     } else {
                         System.out.println("Nenhuma turma encontrada para essa disciplina.");
                     }
                     break;
+
                 case 3:
                     System.out.print("Digite o nome do professor: ");
                     String nomeProf = sc.nextLine();
@@ -107,20 +126,23 @@ public class Main {
                         .toList();
                     if (!turmasProf.isEmpty()) {
                         for (Turma t : turmasProf) {
-                            System.out.println(t);
+                            System.out.println("Turma: " + t.getCodigo() + " | Disciplina: " + t.getDisciplina().getNome());
                         }
                     } else {
                         System.out.println("Nenhuma turma encontrada para esse professor.");
                     }
                     break;
+
                 case 0:
                     relatoriosAtivos = false;
                     break;
+
                 default:
                     System.out.println("Opção inválida!");
             }
         }
     }
+
     private static void menuAlunos(Scanner sc, CadastroAlunos cadastroAlunos) {
         int opcao;
         do {
