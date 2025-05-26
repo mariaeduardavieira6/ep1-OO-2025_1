@@ -1,32 +1,19 @@
 package cadastro;
 
-import disciplinaturma.Disciplina;
 import java.util.ArrayList;
 import java.util.List;
+import disciplinaturma.Disciplina;
 
 public class CadastroDisciplinas {
+    private List<Disciplina> disciplinas = new ArrayList<>();
 
-    private List<Disciplina> listaDisciplinas;
-
-    public CadastroDisciplinas() {
-        this.listaDisciplinas = new ArrayList<>();
-    }
-
-    public boolean adicionarDisciplina(Disciplina disciplina) {
-        if (buscarDisciplina(disciplina.getCodigo()) == null) {
-            listaDisciplinas.add(disciplina);
-            return true;
-        }
-        return false; 
-    }
-
-    public boolean removerDisciplina(String codigo) {
-        return listaDisciplinas.removeIf(d -> d.getCodigo().equals(codigo));
+    public void adicionarDisciplina(Disciplina disciplina) {
+        disciplinas.add(disciplina);
     }
 
     public Disciplina buscarDisciplina(String codigo) {
-        for (Disciplina d : listaDisciplinas) {
-            if (d.getCodigo().equals(codigo)) {
+        for (Disciplina d : disciplinas) {
+            if (d.getCodigo().equalsIgnoreCase(codigo)) {
                 return d;
             }
         }
@@ -34,7 +21,6 @@ public class CadastroDisciplinas {
     }
 
     public List<Disciplina> listarDisciplinas() {
-        return new ArrayList<>(listaDisciplinas);
+        return disciplinas;
     }
-
 }

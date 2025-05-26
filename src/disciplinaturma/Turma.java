@@ -38,6 +38,7 @@ public class Turma implements Serializable {
 		this.sala = presencial ? sala : "Remota";
 	}
 
+	
 	public Disciplina getDisciplina() {
 		return disciplina;
 	}
